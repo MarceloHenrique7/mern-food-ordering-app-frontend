@@ -7,10 +7,10 @@ type Props = {
     children: React.ReactNode
 }
 
-type UserObject = {
-    auth0Id: string;
-    email: string;
-};
+// type UserObject = {
+//     auth0Id: string;
+//     email: string;
+// };
 
 const Auth0ProviderWithNavigate = ({ children }: Props) => {
     const navigate = useNavigate();
