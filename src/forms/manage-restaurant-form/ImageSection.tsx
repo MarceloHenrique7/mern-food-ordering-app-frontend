@@ -29,37 +29,46 @@ const ImageSection = () => {
         </div>
 
         
-        <div className="flex flex-col gap-8 md:w-[50%]">
-        {existingImageUrl && (
-          <AspectRatio ratio={16 / 9}>
-            <img
-              src={existingImageUrl}
-              className="rounded-md object-cover h-full w-full"
+        <div className="flex flex-col gap-8 md:w-[50%]"> {/* vamos ter os items em colunas nessa div com um gap de 8 (espaçamento) e um width de 50% para telas medias*/}
+            {existingImageUrl && (
+                <AspectRatio ratio={16 / 9}> {/* esse componente vai servir para exibirmos a imagem do restaurante no formulario, caso tenha, ratio significa a proporção da imagem*/}
+                    <img 
+                        src={existingImageUrl} 
+                        className="rounded-md object-cover h-full w-full"
+                    /> 
+                    {/* então se a imagem existir exibimos ela aqui, essa imagem estar armazenada em cloudinary, que armazenamos ela pelo backend */}
+                    {/* 
+                        classes:
+                            rounded-md - arredondamos as bordas da imagem
+                            object-cover - garantimos que a imagem cobrirar todo container do AspectRatio
+                            h-full: Esta classe define a altura do elemento como 100% do seu contêiner pai.
+                            w-full: Esta classe define a largura do elemento como 100% do seu contêiner pai.
+                    */}
+                </AspectRatio>
+            )}
+            <FormField 
+             control={control} 
+             name="imageFile" 
+             render={({ field }) => (
+                <FormItem>
+                <FormControl>
+                  <Input
+                    className="bg-white"
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    onChange={(event) =>
+                      field.onChange(
+                        event.target.files ? event.target.files[0] : null
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+            
             />
-          </AspectRatio>
-        )}
-        <FormField
-          control={control}
-          name="imageFile"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  className="bg-white"
-                  type="file"
-                  accept=".jpg, .jpeg, .png"
-                  onChange={(event) =>
-                    field.onChange(
-                      event.target.files ? event.target.files[0] : null
-                    )
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
+        </div>
     </div>
   )
 }
