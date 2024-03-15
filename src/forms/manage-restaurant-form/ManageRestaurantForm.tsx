@@ -195,7 +195,6 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
             processados
             */
             }
-            {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button>}
         </form> 
 
     </Form>
