@@ -1,4 +1,4 @@
-
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
@@ -175,6 +175,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
     }
 
   return (
+    <Form {...form}> {/* passamos todas propiedades, metodos e funções do form para esse Form */}
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-gray-50 p-10 rounded-lg"> {/* falamos que vamos chamar a função onSubmit quando for for enviado */}
             <DetailsSection /> {/* incorporamos a seção de detalhes */}
             <Separator /> {/* adicionamos um separador (linha) para separar as seções */}
@@ -196,6 +197,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
             {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button>}
         </form> 
 
+    </Form>
   )
 }
 
