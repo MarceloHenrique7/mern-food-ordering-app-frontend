@@ -175,21 +175,26 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
     }
 
   return (
-    <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-gray-50 p-10 rounded-lg"> 
-            <DetailsSection /> 
+    <Form {...form}> {/* passamos todas propiedades, metodos e funções do form para esse Form */}
+            <DetailsSection /> {/* incorporamos a seção de detalhes */}
+            <Separator /> {/* adicionamos um separador (linha) para separar as seções */}
+            <CuisinesSection /> {/* seção de opções de cozinhas do restaurante */}
             <Separator /> 
-            <CuisinesSection /> 
-            <Separator /> 
-            <MenuSection /> 
+            <MenuSection /> {/* seção para adicionarmos items no menu */}
             <Separator />
-            <ImageSection /> 
+            <ImageSection /> {/* seção onde adicionamos imagem do restaurante */}
 
 
-
+            {
+            /*
+            aqui primeiramente será exibido o componente de Button, mas quando o usuario clicar
+            no Button iremos salvar o formulario e enquanto esse formulario estiver sendo salvo a
+            propiedade de isLoading vai ficar true então se estiver carregando o salvamento exibimos
+            um LoadingButton, componente de um botão carregando, para mostrar que os dados estão sendo
+            processados
+            */
+            }
             {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button>}
-        </form> 
-
     </Form>
   )
 }
