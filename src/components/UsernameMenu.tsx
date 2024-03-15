@@ -17,6 +17,11 @@ const UsernameMenu = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>{/* esse componente e para conteudo do dropmenu */}
             <DropdownMenuItem> {/* esse componente e para agrupar melhor o espaço do link */}
+                <Link to="/manage-restaurant" className="font-bold hover:text-orange-500">
+                    Manage Restaurant
+                </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem> {/* esse componente e para agrupar melhor o espaço do link */}
                 <Link to="/user-profile" className="font-bold hover:text-orange-500">
                     User Profile
                 </Link>

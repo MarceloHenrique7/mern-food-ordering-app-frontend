@@ -1,0 +1,31 @@
+// arquivo para configuração das opções de cozinhas na seção de Cuisines
+// isso vai para o nosso CuisineSection
+
+export const cuisineList = [
+  "American",
+  "BBQ",
+  "Breakfast",
+  "Burgers",
+  "Cafe",
+  "Chinese",
+  "Desserts",
+  "French",
+  "Greek",
+  "Healthy",
+  "Indian",
+  "Italian",
+  "Japanese",
+  "Mexican",
+  "Noodles",
+  "Organic",
+  "Pasta",
+  "Pizza",
+  "Salads",
+  "Seafood",
+  "Spanish",
+  "Steak",
+  "Sushi",
+  "Tacos",
+  "Tapas",
+  "Vegan",
+]
