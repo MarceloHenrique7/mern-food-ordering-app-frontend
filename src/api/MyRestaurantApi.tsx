@@ -1,6 +1,5 @@
 import { Restaurant } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react"
-import { uptime } from "process";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 
