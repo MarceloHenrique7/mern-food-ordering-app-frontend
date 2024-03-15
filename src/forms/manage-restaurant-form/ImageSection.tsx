@@ -33,14 +33,7 @@ const ImageSection = () => {
             {existingImageUrl && (
                 <AspectRatio ratio={16/9}> {/* esse componente vai servir para exibirmos a imagem do restaurante no formulario, caso tenha, ratio significa a proporção da imagem*/}
                     <img src={existingImageUrl} className="rounded-md object-cover h-full w-full"/> 
-                    {/* então se a imagem existir exibimos ela aqui, essa imagem estar armazenada em cloudinary, que armazenamos ela pelo backend */}
-                    {/* 
-                        classes:
-                            rounded-md - arredondamos as bordas da imagem
-                            object-cover - garantimos que a imagem cobrirar todo container do AspectRatio
-                            h-full: Esta classe define a altura do elemento como 100% do seu contêiner pai.
-                            w-full: Esta classe define a largura do elemento como 100% do seu contêiner pai.
-                    */}
+
                 </AspectRatio>
             )}
             <FormField 
