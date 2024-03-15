@@ -50,8 +50,8 @@ const ImageSection = () => {
              control={control} 
              name="imageFile" 
              render={({ field }) => (
-                <FormItem> 
-                    <FormControl> 
+                <FormItem>
+                    <FormControl>
                         <Input
                             className="bg-white" 
                             type="file" 
@@ -62,11 +62,23 @@ const ImageSection = () => {
                             }
                            /> 
                     </FormControl>
-                    <FormMessage /> 
+                    <FormMessage />
                 </FormItem>
             )}
-            
             />
+            {
+                /* 
+                    abrimos a tag para dizer que vamos ter um item, apenas por questão de organização
+
+                    abrimos a tag para dizer que vamos ter um control, apenas por questão de organização
+
+                    temos um componente de input que e do tipo file, ou seja apenas arquivos serão enviados aqui, e nos aceitamos apenas esses 3 formatos de imagem, jpg, jpeg, png 
+
+                    onChange: quando o usuario seleciona uma arquivo essa função e chamada,  e então pegamos o evento que ocorreu (event) e nesse evento ele possui uma lista de arquivos (event.target.files) aqui se localiza essa lista, então nos alteramos o onChange do campo (field.onChange) e atribuimos ao onChange o arquivo, (event.target.files ? event.target.files[0] : null) se a lista que veio do event tiver algum arquivo dentro então atribuimos esse arquivo ao onChange no field (campo) se não tiver arquivo nessa lista então atribuimos null
+
+                    colocamos um componente de mesagem para captar e mostrar aqui os erros caso tenha, ex: o usuario selecionou um arquivo maior de 5mb ou deixou esse campo vazio
+                */
+            }
         </div>
     </div>
   )
