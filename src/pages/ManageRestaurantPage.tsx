@@ -21,7 +21,7 @@ const ManageRestaurantPage = () => { // criamos a pagina do form do restaurante
   */
 
   return (
-    <ManageRestaurantForm 
+    <ManageRestaurantForm
     restaurant={restaurant} 
     onSave={isEditing ? updateRestaurant : createRestaurant} // se isEditing for true significa que já temos um restaurante então estamos atualizando ele, senão for true significa que não encontramos nenhum restaurante e então estamos criando um. 
     isLoading={isCreateLoading || isUpdateLoading} /> // isCreateLoading e isUpdateLoading são variáveis que indicam se a operação de criação ou atualização do restaurante está em andamento, respectivamente. Se uma dessas operações estiver em andamento, isLoading será true, indicando que o formulário está em um estado de carregamento.
