@@ -4,11 +4,11 @@ import ManageRestaurantForm from "@/forms/manage-restaurant-form/ManageRestauran
 
 const ManageRestaurantPage = () => { // criamos a pagina do form do restaurante
 
-  const { createRestaurant, isLoading: isCreateLoading } = useCreateMyRestaurant() // desestruturamos a função que ativa a outra função de criação do restaurante, e tambem pegamos o isLoading: renomeamos isLoading para isCreateLoading
+  const {  isLoading: isCreateLoading } = useCreateMyRestaurant() // desestruturamos a função que ativa a outra função de criação do restaurante, e tambem pegamos o isLoading: renomeamos isLoading para isCreateLoading
   const { restaurant } = useGetMyRestaurant(); // pegamos restaurant que vem da nossa função que usamos para obter os dados do restaurante, 
-  const { updateRestaurant, isLoading: isUpdateLoading } = useUpdateMyRestaurant() // desestruturamos a função que ativa a outra função de atualizar do restaurante, e tambem pegamos o isLoading: renomeamos isLoading para isUpdateLoading
+  const {  isLoading: isUpdateLoading } = useUpdateMyRestaurant() // desestruturamos a função que ativa a outra função de atualizar do restaurante, e tambem pegamos o isLoading: renomeamos isLoading para isUpdateLoading
 
-  const isEditing = !!restaurant // vai servir para nos informar se estamos criando um restaurante ou editando
+  // const isEditing = !!restaurant // vai servir para nos informar se estamos criando um restaurante ou editando
   /* 
   const isEditing = !!restaurant: Aqui, isEditing é uma variável
   que é definida como true se restaurant não for nulo (null) ou
