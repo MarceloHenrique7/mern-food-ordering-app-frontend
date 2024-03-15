@@ -115,64 +115,64 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
         form.reset(updatedRestaurant) // resetamos o nosso formulario e enviamos nosso restautante atualizado!
     }, [form, restaurant]); // [form, restaurant], é um array de dependências. Isso significa que o useEffect será reexecutado sempre que uma das variáveis contidas nesse array for modificada. Se nenhum array de dependência for fornecido, o efeito será executado após cada renderização.
 
-    const onSubmit = (formDataJson: RestaurantFormData) => { // essa função vai lidar com submit, e aceita dados do tipo restaurantFormData
-        // vamos converter os dados recebidos como json em FormData object, porque no nosso backend nos estamos aceitando esse tipo de dados
-        const formData = new FormData() // criamos um formData aqui 
-        console.log("estamos em submit")
-        /* Os dados enviados usando o objeto FormData são 
-        armazenados de forma semelhante aos dados de um formulário HTML.
-        Eles são formatados como pares chave-valor, onde cada campo do
-        formulário é uma chave e o valor associado é o conteúdo desse campo.
-        */
+    // const onSubmit = (formDataJson: RestaurantFormData) => { // essa função vai lidar com submit, e aceita dados do tipo restaurantFormData
+    //     // vamos converter os dados recebidos como json em FormData object, porque no nosso backend nos estamos aceitando esse tipo de dados
+    //     const formData = new FormData() // criamos um formData aqui 
+    //     console.log("estamos em submit")
+    //     /* Os dados enviados usando o objeto FormData são 
+    //     armazenados de forma semelhante aos dados de um formulário HTML.
+    //     Eles são formatados como pares chave-valor, onde cada campo do
+    //     formulário é uma chave e o valor associado é o conteúdo desse campo.
+    //     */
 
-        formData.append("restaurantName", formDataJson.restaurantName)
-        formData.append("city", formDataJson.city)
-        formData.append("country", formDataJson.country)
+    //     formData.append("restaurantName", formDataJson.restaurantName)
+    //     formData.append("city", formDataJson.city)
+    //     formData.append("country", formDataJson.country)
 
-        // 1 real = 100 centavos
-        // 1.50 real = 150 centavos
-        formData.append(
-            "deliveryPrice", 
-            (formDataJson.deliveryPrice * 100).toString() // aqui vamos multiplicar o valor recebido por 100, para tranformalo em centavos, depois tranformamos para string
-        );
+    //     // 1 real = 100 centavos
+    //     // 1.50 real = 150 centavos
+    //     formData.append(
+    //         "deliveryPrice", 
+    //         (formDataJson.deliveryPrice * 100).toString() // aqui vamos multiplicar o valor recebido por 100, para tranformalo em centavos, depois tranformamos para string
+    //     );
         
-        formData.append(
-            "estimatedDeliveryTime",
-            formDataJson.estimatedDeliveryTime.toString()
-        ); // tranformamos para string o campo
+    //     formData.append(
+    //         "estimatedDeliveryTime",
+    //         formDataJson.estimatedDeliveryTime.toString()
+    //     ); // tranformamos para string o campo
         
 
-        // cuisine e um array temos que lidar com cada item do array separado
-        formDataJson.cuisines.forEach((cuisine, index) => { // fazemos um forEach pelo array cuisines e pegamos cada item (cuisine) e o (index) desse item no array
-            formData.append(`cuisines[${index}]`, cuisine)
-            /*
-            Exemplo de como ficaria esses dados
-                cuisines[0]: "Italiana", no array cuisine na posição 0 temos esse valor
-                cuisines[1]: "Japonesa"
-                cuisines[2]: "Mexicana"
-            */
-        })
+    //     // cuisine e um array temos que lidar com cada item do array separado
+    //     formDataJson.cuisines.forEach((cuisine, index) => { // fazemos um forEach pelo array cuisines e pegamos cada item (cuisine) e o (index) desse item no array
+    //         formData.append(`cuisines[${index}]`, cuisine)
+    //         /*
+    //         Exemplo de como ficaria esses dados
+    //             cuisines[0]: "Italiana", no array cuisine na posição 0 temos esse valor
+    //             cuisines[1]: "Japonesa"
+    //             cuisines[2]: "Mexicana"
+    //         */
+    //     })
 
-        // menuItems e um array temos que lidar com cada item do array separado
-        // em cada item do array temos a chave name com valor e a chave price com valor
-        formDataJson.menuItems.forEach((menuItem, index) => {
-            formData.append(`menuItems[${index}][name]`, menuItem.name) // no nosso array menuItems na posição (index) e na chave ([name]) adicione o valor menuItem.name
-            formData.append(`menuItems[${index}][price]`, (menuItem.price * 100).toString()) // // no nosso array menuItems na posição (index) e na chave ([price]) adicione o valor menuItem.price, (menuItem.price * 100) convertemos para centavos e tranformamos para string
-            /*
-            Exemplo de como ficaria esses dados
-                menuItems[0][name]: "Hamburguer", no array menuItems na posição 0 e na chave name temos esse valor
-                menuItems[0][price]: "12", no array menuItems na posição 0 e na chave pricetemos esse valor
-                menuItems[1][name]: "Coxinha"
-                menuItems[1][price]: "12"
-            */
-        });
+    //     // menuItems e um array temos que lidar com cada item do array separado
+    //     // em cada item do array temos a chave name com valor e a chave price com valor
+    //     formDataJson.menuItems.forEach((menuItem, index) => {
+    //         formData.append(`menuItems[${index}][name]`, menuItem.name) // no nosso array menuItems na posição (index) e na chave ([name]) adicione o valor menuItem.name
+    //         formData.append(`menuItems[${index}][price]`, (menuItem.price * 100).toString()) // // no nosso array menuItems na posição (index) e na chave ([price]) adicione o valor menuItem.price, (menuItem.price * 100) convertemos para centavos e tranformamos para string
+    //         /*
+    //         Exemplo de como ficaria esses dados
+    //             menuItems[0][name]: "Hamburguer", no array menuItems na posição 0 e na chave name temos esse valor
+    //             menuItems[0][price]: "12", no array menuItems na posição 0 e na chave pricetemos esse valor
+    //             menuItems[1][name]: "Coxinha"
+    //             menuItems[1][price]: "12"
+    //         */
+    //     });
 
-        if (formDataJson.imageFile) { // existe esse campo no nosso formDataJson?
-            formData.append(`imageFile`, formDataJson.imageFile) // adicionamos ao formData o campo de Arquivo
-        }
+    //     if (formDataJson.imageFile) { // existe esse campo no nosso formDataJson?
+    //         formData.append(`imageFile`, formDataJson.imageFile) // adicionamos ao formData o campo de Arquivo
+    //     }
 
-        onSave(formData) // chamamos o onSave para salvar os dados agora em formato de formData
-    }
+    //     onSave(formData) // chamamos o onSave para salvar os dados agora em formato de formData
+    // }
 
   return (
     <Form {...form}> {/* passamos todas propiedades, metodos e funções do form para esse Form */}
@@ -195,6 +195,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
             */
             }
             {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button>}
+
     </Form>
   )
 }
