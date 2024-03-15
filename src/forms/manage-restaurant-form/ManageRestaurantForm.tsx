@@ -73,11 +73,11 @@ type RestaurantFormData = z.infer<typeof formSchema>
 
 type Props = {
     restaurant?: Restaurant // dizemos que restaurant tem que ser do tipo Restaurant que criamos em types.ts "?" indica que essa propiedade e opcional
-    onSave: (restaurantFormData: FormData) => void; // onSave e uma função que aceita dados de um formulario (FormData) e não retornamos nada (void)
+    // onSave: (restaurantFormData: FormData) => void; // onSave e uma função que aceita dados de um formulario (FormData) e não retornamos nada (void)
     isLoading: boolean; // um booleano que indica se o componente está atualmente em um estado de carregamento. Isso pode ser usado para mostrar um indicador de carregamento ou desabilitar interações durante o carregamento. 
 }
  
-const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // essa função recebe como parâmetro uma função onSave() que manipular um registro ou cria e etc. tambem uma propiedade que diz se o processo de criação do restaurante está em andamento, e restaurant para popularmos (preencher) nossos campos do form automaticamente 
+const ManageRestaurantForm = ({ isLoading, restaurant }: Props) => { // essa função recebe como parâmetro uma função onSave() que manipular um registro ou cria e etc. tambem uma propiedade que diz se o processo de criação do restaurante está em andamento, e restaurant para popularmos (preencher) nossos campos do form automaticamente 
     const form = useForm<RestaurantFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
