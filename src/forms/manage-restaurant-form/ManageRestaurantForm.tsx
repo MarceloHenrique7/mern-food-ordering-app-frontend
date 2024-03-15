@@ -6,8 +6,6 @@ import DetailsSection from "./DetailsSection";
 import CuisinesSection from "./CuisinesSection";
 import MenuSection from "./MenuSection";
 import ImageSection from "./ImageSection";
-import LoadingButton from "@/components/LoadingButton";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Restaurant } from "@/types";
 import { useEffect } from "react";
