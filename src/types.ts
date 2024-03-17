@@ -26,3 +26,13 @@ export type Restaurant = { // criamos um type dos dados do nosso restaurante
     imageUrl: string;
     lastUpdated: string;
 }
+
+
+export type RestaurantSearchResponse = { // definimos um tipo de resposta que nossa função de search (busca) traz para a gente
+    data: Restaurant[];
+    pagination: {
+        total: number;
+        page: number;
+        pages: number;
+    }
+}
