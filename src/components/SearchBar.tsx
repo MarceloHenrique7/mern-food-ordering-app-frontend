@@ -5,6 +5,7 @@ import { Form, FormControl, FormField, FormItem } from './ui/form';
 import { Search } from 'lucide-react';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { useEffect } from 'react';
 
 
 const formSchema = z.object({ // criamos um schema de validação para a nossa searchQuery
@@ -32,7 +33,7 @@ const SearchBar = ({ onSubmit, placeHolder, onReset, searchQuery }: Props) => { 
 
         resolver: zodResolver(formSchema),
         defaultValues: {
-            searchQuery // definimos um valor padrão para esse campo searchQuery
+            searchQuery // definimos um valor padrão para esse campo "searchQuery" do nosso form como oq recebemos de parâmetro
         }
         /* 
         const form = useForm<SearchForm>({...}) é usado para criar um controle
@@ -42,7 +43,12 @@ const SearchBar = ({ onSubmit, placeHolder, onReset, searchQuery }: Props) => { 
         */
     })
     
-    
+
+    useEffect(() => { // todas vez que [form, searchQuery] forem alterados ou atualizados vamos executar esse useEffect
+        form.reset({ searchQuery }) // e aqui nos damos um reset nesse campo do nosso formulario
+    }, [form, searchQuery])
+
+
     const handleReset = () => { // essa função serve para resetarmos o formulario
         form.reset({
             searchQuery: "" 
@@ -70,7 +76,7 @@ const SearchBar = ({ onSubmit, placeHolder, onReset, searchQuery }: Props) => { 
             <Form>. Isso inclui propriedades e métodos como handleSubmit,
             register, control, etc
         */}
-        <form onSubmit={form.handleSubmit(onSubmit)} className={`flex items-center flex-1 gap-3 justify-between flex-row border-2 rounded-full p-3 mx-5 ${form.formState.errors.searchQuery && "border-red-500"}`}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className={`flex items-center gap-3 justify-between flex-row border-2 rounded-full p-3 ${form.formState.errors.searchQuery && "border-red-500"}`}>
             {/*
                 onSubmit e oque vai ser chama ao esse formulario ser enviado,
 
@@ -177,7 +183,7 @@ const SearchBar = ({ onSubmit, placeHolder, onReset, searchQuery }: Props) => { 
                 type="button"
                 variant="outline" 
                 className="rounded-full"
-            >Clear</Button>
+            >Reset</Button>
             {/* 
                 renderizamos um botão de Clear que vai aparecer após o usuario digitar algo
                 ele vai ser util caso o usuario digite algo muito na searchBar grande tipo:
