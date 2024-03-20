@@ -7,7 +7,7 @@ export type User = { // criamos um type dos dados do nosso usuario
     country: string;
 }
 
-type MenuItem = { // como isso e um schema então ele vai conter o _id
+export type MenuItem = { // como isso e um schema então ele vai conter o _id
     _id: string;
     name: string;
     price: number;

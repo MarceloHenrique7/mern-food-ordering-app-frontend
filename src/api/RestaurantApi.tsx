@@ -1,9 +1,47 @@
 import { SearchState } from "@/pages/SearchPage"
-import { RestaurantSearchResponse } from "@/types"
+import { Restaurant, RestaurantSearchResponse } from "@/types"
 import { useQuery } from "react-query"
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
+// usamos essa função para fazer a request para obter os dados de um unico restaurante
+export const useGetRestaurant = (restaurantId?: string) => {
+    /* 
+        Aqui recebemos um id do tipo string como parâmetro dessa função
+    */
+
+    const getRestaurantByIdRequest = async (): Promise<Restaurant> => { // função que faz a resquest e nos retorna uma promessa de um Restaurant
+        
+        const response = await fetch(`${API_BASE_URL}/api/restaurant/${restaurantId}`);
+        // passamos para fetch nossa rota base"/api/restaurant" e o endpoint que configuramos para essa rota no backend, depois vem o id
+        
+        if (!response.ok) { // se a resposta não foi (200) ok, então lançamos um erro
+            throw new Error("Failed to get restaurant")
+        }
+
+        return response.json() // se der certo transformamos os dados do restaurant para o formato json
+        
+    };
+
+    
+    const {data: restaurant, isLoading} = useQuery("fetchRestaurant", getRestaurantByIdRequest, {
+        enabled: !!restaurantId,
+    })
+    // passamos para o useQuery um nome e a nossa função que faz de fato a request
+    // então pegamos o data (dados), apenas renomeamos esse data para restaurant, da nossa requisição através do hook useQuery do react
+    // também pegamos o isLoading para indicar o estado de carregamento da request
+   /*
+    {
+        enabled: !!restaurantId,
+    }
+
+    aqui falamos para o useQuery do react, para ele fazer a query (consulta) se tivermos um id
+   */
+    return { restaurant, isLoading } // retornamos o restaurant, e o isLoading
+
+}
+
 
 // criamos nossa Api para se comunicar com o backend
 export const useSearchRestaurants = (searchState: SearchState, city?: string) => { // Recebemos como parâmetro uma "city" e vamos passa-la para o back end na url
