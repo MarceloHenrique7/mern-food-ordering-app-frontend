@@ -1,9 +1,12 @@
+import { useCreateCheckoutSession } from "@/api/OrderApi";
 import { useGetRestaurant } from "@/api/RestaurantApi";
+import CheckoutButton from "@/components/CheckoutButton";
 import MenuItem from "@/components/MenuItem";
 import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfo from "@/components/RestaurantInfo";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
+import { UserFormData } from "@/forms/user-profile-form/UserProfileForm";
 import { MenuItem as MenuItemType } from "@/types"; // aqui mudamos apenas o nome desse import porque já temos um igual acima
 import { useState } from "react";
 import { useParams } from "react-router-dom"
@@ -23,7 +26,16 @@ const DetailPage = () => {
     const { restaurant, isLoading } = useGetRestaurant(restaurantId);
     // pegamos o restaurant e o isLoading da nossa função "useGetMyRestaurant"
 
-    const [cartItems, setCartItems] = useState<CartItem[]>([])
+    const { createCheckoutSession, isLoading: isCheckoutLoading } = useCreateCheckoutSession();
+    // pegamos dessa nossa função "useCreateCheckoutSession", uma função para criar e fazer nossa request, e o isLoading que nos informa o carregamento da request, renomeamos o isLoading para "isCheckoutLoading" para não dar conflito com os outros isLoading desse arquivo
+
+    const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+        // aqui obtemos o carrinho que foi salvo no storage do navegador 
+        // e verificamos se ele existe
+        const storedCartItems = sessionStorage.getItem(`cartItems-${restaurantId}`)
+        return storedCartItems ? JSON.parse(storedCartItems) : [] // se esse cartItems (carrinho de item) estiver no storage do navegador, nos fazemos um parse desse cartItems para json, e definimos ele como o state inicial para cartItems, se não apenas definimos inicialmente uma lista vazia
+
+    })
 
     const addToCart = (menuItem: MenuItemType) => {
         // função para adicionar o item no "cartItems" (carrinho)
@@ -75,6 +87,15 @@ const DetailPage = () => {
             criamos o id, name, price, se ele caiu nesse else significa que esse item não existe no carrinho
             então definimos a quantity incia padrão como 1
             */
+            
+            sessionStorage.setItem(`cartItems-${restaurantId}`, JSON.stringify(updatedCartItems))
+            /* 
+                essa linha serve para salvarmos os items no local storage do navegador
+                porque se o usuario não estiver logado, e fizer login estando com os items já selecionado no carrinho, após o login os seus items no carrinho
+                vão ser resetados após ele voltar para página 
+            */
+            
+            
 
             return updatedCartItems // retornamos o cartItems Atualizado
         })
@@ -89,6 +110,14 @@ const DetailPage = () => {
                 Aqui apenas fazemos um filter pelo nosso array que já existe,
                 ele irá nos retornar tudo que já existe menos o nosso cartItem
             */
+
+            sessionStorage.setItem(`cartItems-${restaurantId}`, JSON.stringify(updatedCartItems))
+            /* 
+                essa linha serve para salvarmos os items no local storage do navegador
+                porque se o usuario não estiver logado, e fizer login estando com os items já selecionado no carrinho, após o login os seus items no carrinho
+                vão ser resetados após ele voltar para página 
+            */
+
             return updatedCartItems // retornamos o novo cartItems atualizado
         })
     }
@@ -97,6 +126,43 @@ const DetailPage = () => {
         inicializamos cartItems como vazio "[]"
         "cartItems" será um array de items, o item e do tipo "CartItem"
     */
+
+    const onCheckout = async (userFormData: UserFormData) => {
+        // aqui criamos uma função para lidar com checkout, recebemos um usuario do tipo UserFormData nessa função
+
+        if(!restaurant) { // verificamos se o restaurant existe, se não existir não podemos continuar o processo de criar o checkoutSession
+            return;
+        }
+
+        const checkoutData = { // estamos criando os dados que vamos enviar no body da request para nossa função de criar o CheckoutSession
+            cartItems: cartItems.map((cartItem)=> ({ 
+                menuItemId: cartItem._id,
+                name: cartItem.name,
+                quantity: cartItem.quantity.toString(),
+
+                /*
+                    A sintaxe no "map" que fazemos: (cartItem) => "({})" - isso nos retorna automaticamente oque estamos fazendo dentro do map
+                    passamos as propiedades necessaria para nosso body da request, quando o usuário fazer a request para nossa API de criar checkoutSession no backend
+                */
+            })),
+            restaurantId: restaurant?._id, // passamos o restaurantId para nosso body
+            deliveryDetails: {
+                name: userFormData.name,
+                addressLine1: userFormData.addressLine1,
+                city: userFormData.city,
+                country: userFormData.country,
+                email: userFormData.email as string, // dizemos que é uma string
+            } // passamos o delivey Details para o nosso body
+        };
+
+        const data = await createCheckoutSession(checkoutData)
+
+        window.location.href = await data.url; 
+        /* 
+            "window.location.href" estamos enviando o user para essa url
+            essa url nos obtemos na resposta da nossa api depois de criar o CheckoutSession
+        */
+    }
 
     if(isLoading || !restaurant) { // se isLoading estiver em estado de carregamento (true), ou se não tivermos um restaurante
         return "Loading..."; // retornamos nessa page essa mensagem
@@ -161,6 +227,10 @@ const DetailPage = () => {
             <div>
                 <Card> {/* usaremos o componente card do shadCn */}
                     <OrderSummary restaurant={restaurant} cartItems={cartItems} removeFromCart={removeFromCart}/>
+                    <CardFooter> {/* adicionamos um componente  de checkout aqui */}
+                        <CheckoutButton disabled={cartItems.length === 0} onCheckout={onCheckout} isLoading={isCheckoutLoading}/>
+                        {/* passamos as propiedade para nosso botão de checkout */}
+                    </CardFooter>
                 </Card>
             </div>
         </div>
