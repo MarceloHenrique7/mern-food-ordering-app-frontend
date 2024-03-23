@@ -20,7 +20,7 @@ const RestaurantInfo = ({ restaurant }: Props) => {
             </CardDescription>
         </CardHeader>
         {/* adicionamos cabeçalho do card e também um title , (tracking-tight) controla o espaçamento entre as letras*/}
-        <CardContent className="flex"> {/* adicionamos o conteudo do card */} 
+        <CardContent className="flex flex-wrap"> {/* adicionamos o conteudo do card */} 
                 {restaurant.cuisines.map((item, index) => (
                     <span className="flex">
                         <span>{item}</span>
