@@ -1,9 +1,47 @@
+import { Order } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react"
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
+
+export const useGetMyOrder = () => {
+    // função para fazer a requisição pro backend e obter os dados do pedido
+    const { getAccessTokenSilently } = useAuth0() // obtendo uma função de Auth0 que vai buscar o token do usuário
+
+    const getMyOrderRequest = async (): Promise<Order[]> => { // função para fazer a request
+        const accessToken = await getAccessTokenSilently()
+        const response = await fetch(`${API_BASE_URL}/api/order`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error("Failed to get orders")
+        }
+
+        return response.json()
+    };
+
+    const { data: orders, isLoading} = useQuery("fetchMyOrders", getMyOrderRequest, { refetchInterval: 5000 })
+    /*
+        Aqui pegamos os dados do retorno dessa função data: orders
+        e também pegamos o isLoading, para indicar o estado de carregamento
+
+        { refetchInterval: 5000 }: Este é um objeto de configuração opcional
+        passado para useQuery. Neste caso, refetchInterval é configurado para
+        5000 milissegundos (5 segundos), o que significa que a consulta será
+        automaticamente reexecutada a cada 5 segundos. Isso é útil para atualizar
+        os dados automaticamente em intervalos regulares, como em um aplicativo de
+        pedidos em tempo real.
+    */
+   
+   return { orders, isLoading }
+
+}
 
 type CheckoutSessionRequest = { // criamos um tipo para nossa request
     cartItems: { // iremos receber o carrinho (cartItems)

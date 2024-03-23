@@ -27,6 +27,28 @@ export type Restaurant = { // criamos um type dos dados do nosso restaurante
     lastUpdated: string;
 }
 
+export type OrderStatus = "placed" | "paid" | "inProgress" | "outForDelivery" | "delivered"
+
+export type Order = { // criamos um tipo para o pedido
+    _id: string; // teremos um id do pedido
+    restaurant: Restaurant; // teremos um restaurante que foi feito o pedido
+    user: User; // teremos o usuário que fez o pedido
+    cartItems: { // teremos um carrinhos de items
+        menuItemId: string;
+        name: string;
+        quantity: string;
+    }[]; // esse [] indica que cartItems vai ser um array, que vai conter varios objetos com essas três propiedades
+    deliveryDetails: {
+        name: string;
+        addressLine1: string;
+        city: string;
+        email: string;
+    };
+    totalAmount: number;
+    status: OrderStatus;
+    createdAt: string;
+    restaurantId: string;
+}
 
 export type RestaurantSearchResponse = { // definimos um tipo de resposta que nossa função de search (busca) traz para a gente
     data: Restaurant[];
@@ -36,3 +58,5 @@ export type RestaurantSearchResponse = { // definimos um tipo de resposta que no
         pages: number;
     }
 }
+
+

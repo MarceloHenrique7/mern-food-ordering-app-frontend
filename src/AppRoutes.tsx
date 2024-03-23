@@ -7,6 +7,7 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import ManageRestaurantPage from "./pages/ManageRestaurantPage";
 import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
+import OrderStatusPage from "./pages/OrderStatusPage";
 
 const AppRoutes = () => {
     return (
@@ -19,6 +20,13 @@ const AppRoutes = () => {
             } /> 
 
             <Route element={<ProtectedRoute />}> {/* aqui se o usuario tentar acessar /user-profile primeiro vai ser redirecionado para esse componente (ProtectedRoute) onde verifica se ele estar logado, se essa função der certo ele ira logo em seguida conseguir acessar /user-profile senão será redirecionado para "/" HomePage */}
+                <Route
+                    path="/order-status" 
+                    element={
+                    <Layout>
+                        <OrderStatusPage />
+                    </Layout>
+                }/>
                 <Route
                     path="/user-profile" 
                     element={

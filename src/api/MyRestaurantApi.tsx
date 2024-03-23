@@ -1,4 +1,4 @@
-import { Restaurant } from "@/types";
+import { Order, Restaurant } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
@@ -138,4 +138,93 @@ export const useUpdateMyRestaurant = () => {
 
     return { updateRestaurant, isLoading } // retornamos a função que ativa a nossa função de criar o restaurante, e isLoading para verificar se o processo de criação está em carregamento
 
+}
+
+
+
+export const useGetMyRestaurantOrders = () => {
+
+    const { getAccessTokenSilently } = useAuth0(); // ultilizamos a função para pegar o token no header para a gente
+
+    const getMyRestaurantOrders = async (): Promise<Order[]> => {
+        const accessToken = await getAccessTokenSilently();
+
+        const response = await fetch(`${API_BASE_URL}/api/my/restaurant/order`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json"
+            },
+        });
+
+        if (!response.ok) {
+            // se a resposta não for ok
+            throw new Error("Failed to fecth orders") // lançamos um error
+        }
+
+        return response.json() // retornamos a resposta
+    }
+ 
+    const { data: orders, isLoading } = useQuery("fetchMyRestaurantOrders", getMyRestaurantOrders)
+    // aqui pegamos os dados da request, e o isLoading para indicar o carregamento da request
+
+    return { orders, isLoading } // retornamos os orders e o isLoading
+    
+    
+}
+
+
+type UpdateOrderStatusRequest = {
+    // especificamos que nesse tipo recebemos
+    orderId: string; // um id do pedido
+    status: string; // um status do pedido
+}
+
+export const useUpdateMyRestaurantOrder = () => {
+    // função para fazer a request para o backend atualizar o status do pedido
+    const { getAccessTokenSilently } = useAuth0(); // ultilizamos a função para pegar o token no header para a gente
+
+    const updateMyRestaurantOrder = async (updateStatusOrderRequest: UpdateOrderStatusRequest) => { // falamos que vamos receber nessa função um objeto do tipo "UpdateOrderStatusRequest"
+        // função para criar e fazer a request
+        const accessToken = await getAccessTokenSilently(); // pegamos o token ultilizando a função
+
+        const response = await fetch(`${API_BASE_URL}/api/my/restaurant/order/${updateStatusOrderRequest.orderId}/status`, { // essa e a url para fazer a req para o backend, mandamos o id do pedido
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ status: updateStatusOrderRequest.status }) // passamos aqui o status que queremos atualizar o pedido
+        })
+
+        if (!response.ok) {
+            // se a resposta não for ok
+            throw new Error("Failed to update status") // lançamos um erro
+        }
+        
+        return response.json() // retornamos a resposta convertida para json
+    }
+
+    const { mutateAsync: updateRestaurantStatus, isLoading, isError, isSuccess, reset } = useMutation(updateMyRestaurantOrder)
+    /*
+        Passamos para mutateAsync "updateRestaurantStatus", significar que agora para fazer nossa mutation ou request usaremos "updateRestaurantStatus"
+
+        Também pegamos a propiedade isLoading para nos dizer se a request está em andamento.
+        Pegamos isError para nos dizer se deu Erro nessa mutation (request)
+        Pegamos isSuccess para nos dizer se a mutation (request) foi sucesso 
+        Pegamos o reset, porque se tiver erro nessa mutation, resetamos tudo para o erro não permanecer
+    */
+
+   
+   if (isSuccess) {
+    // se foi sucesso nossa mutation (request)
+       toast.success("Order updated") // retornamos uma mensagem através do toast de succeso para o usuário
+    }
+    
+    if (isError) {
+        // se deu erro nossa mutation (request)
+        toast.error("Unable to update order") // retornamos uma mensagem através do toast de erro para o usuário
+        reset(); // isso vai limpar o estado do toast, para o popup com a mensagem não ficar aparecendo para o usuário pra sempre
+    }
+
+    return { updateRestaurantStatus, isLoading } // retornamos a nossa função mutateAsync que faz a mutation (request), e o is Loading
 }
