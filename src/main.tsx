@@ -18,7 +18,7 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router>
-      <QueryClientProvider client={queryClient}> {/* criando umponto de API do usuario */}
+      <QueryClientProvider client={queryClient}> {/* criando um ponto de API do usuario */}
         <Auth0ProviderWithNavigate>
           <AppRoutes/>
           <Toaster visibleToasts={1} position="top-right" richColors /> {/* Toaster são as mensagens que vao aparecer quando por exemplo o usuaario atualizar os seus dados, queremos que uma mensagem aparareca pra ele, visibleToasts={1}, significa que apenas uma mensagem será exibida de cada vez, position define aonde a msg ira aparecer, richColors porque vamos ter diferentes tipos de cor de mensagem, por exemplo mensagem de erros e de sucesso  */}

@@ -185,7 +185,6 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
             <Separator />
             <ImageSection /> {/* seção onde adicionamos imagem do restaurante */}
 
-
             {
             /*
             aqui primeiramente será exibido o componente de Button, mas quando o usuario clicar
@@ -197,7 +196,6 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => { // 
             }
             {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button>}
         </form> 
-
     </Form>
   )
 }

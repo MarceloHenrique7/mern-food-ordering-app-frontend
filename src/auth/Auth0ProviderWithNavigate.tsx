@@ -25,7 +25,7 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
         throw new Error("Unable to initialize auth") // checando se essas variaveis de ambientes existem
     }
 
-    const onRedirectCallback = (appState?: AppState) => { // essa função e chamada quando o usuario e redirecionado de volta para pagina apos login
+    const onRedirectCallback = (appState?: AppState) => { // essa função e chamada quando o usuario e redirecionado de volta para pagina após login
         // recebemos um parâmetro que e do Tipo AppState
         navigate(appState?.returnTo || "/auth-callback")
 
@@ -34,7 +34,7 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
             aqui dizemos: se em appState tivermos uma propiedade returnTo,
             use isso para redirecionar o usuario
 
-            senão redirecione ele para essa url: /auth-callback
+            se não redirecione ele para essa url: /auth-callback
         */
     }
 

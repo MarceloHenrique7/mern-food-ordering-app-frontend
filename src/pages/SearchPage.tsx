@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 export type SearchState = {
     searchQuery: string; // searchQuery será oque o usuário digitara na searchBar
     page: number; // page será a página atual que o usuário está navegando
-    selectedCuisines: string[] // selectedCuisines será um array que armazena as Cuisines slecionadas no Filtro
+    selectedCuisines: string[] // selectedCuisines será um array que armazena as Cuisines selecionadas no Filtro
     sortOption: string; // será uma opção de ordenação do nosso filtro e tem que ser string
 } 
 

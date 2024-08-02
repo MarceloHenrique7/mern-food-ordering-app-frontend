@@ -59,7 +59,6 @@ const CuisineFilter = ({ onChange, selectedCuisines, isExpanded, onExpandedClick
         // nos vamos criar um novo array baseado nesse clickedCuisine, verificando se ele está checked ou não
         const isChecked = event.target.checked  // temos acesso a essa propiedade também
         const newCuisinesList = isChecked ? [...selectedCuisines, clickedCuisine] : selectedCuisines.filter((cuisine) => cuisine !== clickedCuisine)
-        
         onChange(newCuisinesList) // passamos para nosso onChange o novo array
 
         /*
@@ -92,8 +91,6 @@ const CuisineFilter = ({ onChange, selectedCuisines, isExpanded, onExpandedClick
     }   
     
     const handleCuisinesReset = () => onChange([]) // handleCuisinesReset = armazena a nossa função de onChange que é a função que possui as cuisines, então para resetar apenas passamos esse array vazio
-    
-
 
     return (
     <>
@@ -115,7 +112,6 @@ const CuisineFilter = ({ onChange, selectedCuisines, isExpanded, onExpandedClick
                             <Label htmlFor={`cuisine_${cuisine}`} className={`flex flex-1 items-center cursor-pointer text-sm rounded-full px-4 py-2 font-semibold ${isSelected ? "border border-green-600 text-green-600" : "border border-slate-300"}`}>
                                 {isSelected && <Check size={20} strokeWidth={3} /> /* isso aqui e um icone de Check, verifica se está selecionado a cuisine atual, size=20 e o taanho do icon, e strokeWidth=3 e a expressura da linha do icon */ } 
                                 {cuisine /* exibimos o nome da cuisine atual*/}
-
                             </Label>
                         </div>
                 }) 

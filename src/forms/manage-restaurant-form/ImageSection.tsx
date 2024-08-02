@@ -22,7 +22,7 @@ const ImageSection = () => {
   return (
     <div className="space-y-2"> {/* adiciona um espaço entre os items de 2 */}
         <div>
-            <h2 className="text-2x1 font-bold">Image</h2> {/* text-2x1 Este texto será 2 vezes maior que o texto padrão. */}
+            <h2 className="text-2xl font-bold">Image</h2> {/* text-2x1 Este texto será 2 vezes maior que o texto padrão. */}
             <FormDescription> {/* adicionamos um FormDescription porque esse componente vai ser usado dentro de um outro Form */}
                 Add an image that will be displayed on your restaurant listing in the search results. Adding a new image will overwrite the existing one
             </FormDescription>

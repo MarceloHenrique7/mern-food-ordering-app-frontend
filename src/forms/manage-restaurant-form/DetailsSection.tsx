@@ -85,4 +85,4 @@ const DetailsSection = () => { // seção de detalhes no nosso form
 
 
 
-export default DetailsSection
+export default DetailsSection;

@@ -24,8 +24,6 @@ type Props = {
     searchQuery?: string; // recebemos nesse tipo um searchQuery que e opcional
 }
 
-
-
 // criamos o nosso componente de searchBar (barra de pesquisa) onde o usuário vai poder fazer sua pesquisa
 const SearchBar = ({ onSubmit, placeHolder, onReset, searchQuery }: Props) => { // desestruturamos do tipo Props suas propiedades definidas, é agora recebemos cada propiedade desse tipo Props, dentro dessa função
     
