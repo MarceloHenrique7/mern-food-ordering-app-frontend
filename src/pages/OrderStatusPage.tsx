@@ -28,7 +28,7 @@ const OrderStatusPage = () => {
                     <div className="grid gap-10 md:grid-cols-2"> {/* aqui nessa div teremos para telas menores "mobile", uma grid com um elemento, é para telas medias uma grid com duas colunas */}
                         <OrderStatusDetail order={order} />
                         <AspectRatio ratio={16/5}>
-                            <img src={order.restaurant.imageUrl} className="rounded-md object-cover h-full w-full"/>
+                            <img src={order?.restaurant?.imageUrl} className="rounded-md object-cover h-full w-full"/>
                         </AspectRatio>
                         {/*
                             Exibimos "OrderStatusDetail" que contem detalhes como total do pedido, nomes dos item comprados

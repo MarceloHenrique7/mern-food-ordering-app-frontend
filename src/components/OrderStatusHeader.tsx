@@ -20,7 +20,7 @@ const OrderStatusHeader = ({ order }: Props) => {
         */
 
        const created = new Date(order.createdAt) // criamos uma nova date a partir da hora que o pedido foi criado
-       created.setMinutes(created.getMinutes() + order.restaurant.estimatedDeliveryTime) 
+       created.setMinutes(created.getMinutes() + order.restaurant?.estimatedDeliveryTime) 
        /* 
             Como created e do tipo Date temos acesso a esse metodo de adicionar minutos na data
             
